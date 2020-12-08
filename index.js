@@ -34,21 +34,16 @@ const getAllCourses = async () => {
     const courses = await Course.find()
     console.log(courses)
 }
-const findCourses = async (findCond, sortCond={}, viewCond={}) => {
+const findCourses = async (findCond, sortCond={}, viewCond={},orCond=[]) => {
     /**
-    * ! : Comparision Query Operators
-    * *    eq  (equal)
-    * *    ne  (not equal)
-    * *    gt  (greater than)
-    * *    gte (greater than or equal to)
-    * *    lt  (lesser than)
-    * *    lte (lesser than or equal to)
-    * *    in  (in)
-    * *    nin (not in)
+    * ! : Logical Query Operators
+    * *    or 
+    * *    and 
     */  
     //* To Retrieve certain documents of a collection
     const courses = await Course
         .find(findCond)         //? All documents satisfying findCond Property
+        .or(orCond)
         .sort(sortCond)         //? Sorted in sortCond manner
         .select(viewCond)       //? only columns mentioned in viewCond
     console.log(courses)
@@ -57,4 +52,4 @@ const findCourses = async (findCond, sortCond={}, viewCond={}) => {
 //?createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
-findCourses({ name : { $in : ['React.JS', 'Angular'] } },{name : 1},{name:1, author :1})
+findCourses({},{name : 1},{name:1, author :1}, [{name : 'React.JS'}, {isPublished : true}])
