@@ -47,12 +47,10 @@ const findCourses = async (findCond, sortCond={}, viewCond={}) => {
     console.log(courses)
 }
 const updateCourse = async (id, newData) => {
-    //* Query First Approach
-    const course = await Course.findById(id)
-    if(!course) return console.log('Invalid Id')
-    console.log(course)
-    course.set(newData)
-    const result = await course.save()
+    //* Update First Approach
+    const result = await Course.update({_id : id },{
+        $set : newData
+    })
     console.log(result)     
 }
 
