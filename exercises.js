@@ -11,6 +11,7 @@ const courseSchema = mongoose.Schema({
     author : String,
     tags : [ String ],
     date : { type : Date, default : Date.now },
+    price : Number,
     isPublished : Boolean
 })
 
@@ -26,8 +27,8 @@ const getDocuments = async (findCond={}, sortCond={}, selectCond={}) => {
 }
 
 const run = async () => {
-    // Get name and author of all backend published courses sorted by their name, 
-    const courses = await getDocuments({isPublished : true, tags : 'Backend'},{name :1},{name : 1, author : 1})
+    // Get name and author of all frontend and backend published courses sorted by their price in descending order, 
+    const courses = await getDocuments({isPublished : true, tags : { $in : ['Frontend','Backend']} }, {price : -1},{name : 1, author : 1})
     console.log(courses)
 }
 
