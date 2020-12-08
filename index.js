@@ -48,14 +48,17 @@ const findCourses = async (findCond, sortCond={}, viewCond={}) => {
 }
 const updateCourse = async (id, newData) => {
     //* Update First Approach
-    const result = await Course.update({_id : id },{
+    //* This Method By Default returns the old document 
+    //* To get new one pass one more object 
+    //* i.e., { new : true}
+    const result = await Course.findByIdAndUpdate(id, {
         $set : newData
-    })
-    console.log(result)     
+    },{ new : true})
+    console.log(result)   
 }
 
 //?createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
 //?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
-updateCourse('5fcf409454ec9a20a7c4a236',{ name : "Node.JS", author : "Mosh Hanedani" })
+updateCourse('5fcf413ccee57b21189cdf38',{ name : "React.JS", author : "Mosh Hamedani" })
