@@ -51,14 +51,21 @@ const updateCourse = async (id, newData) => {
     //* This Method By Default returns the old document 
     //* To get new one pass one more object 
     //* i.e., { new : true}
-    const result = await Course.findByIdAndUpdate(id, {
+    const course = await Course.findByIdAndUpdate(id, {
         $set : newData
     },{ new : true})
-    console.log(result)   
+    console.log(course)   
+}
+const removeCourse = async id => {
+    //* deleteOne() will delete one document satisfying the provided condition
+    //* And it returns the number of deleted documents and ok message.
+    const result = await Course.deleteOne({ _id : id })
+    console.log(result)
 }
 
 //?createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
 //?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
-updateCourse('5fcf413ccee57b21189cdf38',{ name : "React.JS", author : "Mosh Hamedani" })
+//?updateCourse('5fcf413ccee57b21189cdf38',{ name : "React.JS", author : "Mosh Hamedani" })
+removeCourse('5fcf413ccee57b21189cdf38')
