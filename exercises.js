@@ -18,17 +18,18 @@ const courseSchema = mongoose.Schema({
 //* Modal
 const Course = mongoose.model('Course', courseSchema)
 
-const getDocuments = async (findCond={}, sortCond={}, selectCond={}) => {
+const getDocuments = async (findCond={}, orCond, sortCond={}, selectCond={}) => {
     return await Course
         .find(findCond)
+        .or(orCond)
         .sort(sortCond)
         .select(selectCond)
     console.log(result)
 }
 
 const run = async () => {
-    // Get name and author of all frontend and backend published courses sorted by their price in descending order, 
-    const courses = await getDocuments({isPublished : true, tags : { $in : ['Frontend','Backend']} }, {price : -1},{name : 1, author : 1})
+    //* Get all published courses that are $30 or more, or have the word 'JS' in their name.
+    const courses = await getDocuments({isPublished : true }, [{price : { $gte : 30 }}, { name : /JS/i }])
     console.log(courses)
 }
 
