@@ -39,7 +39,7 @@ const findCourses = async (findCond, sortCond={}, viewCond={}) => {
     const courses = await Course
         .find(findCond)         //? All documents satisfying findCond Property
         .sort(sortCond)         //? Sorted in sortCond manner
-        .select(viewCond)       //? only columns mentioned in viewCond
+        .count()                //? counts the documents satisfying findCond Property
     console.log(courses)
 }
 
