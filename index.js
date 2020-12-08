@@ -35,11 +35,15 @@ const getAllCourses = async () => {
     console.log(courses)
 }
 const findCourses = async (findCond, sortCond={}, viewCond={}) => {
+    pageNumber = 2
+    pageSize = 1
     //* To Retrieve certain documents of a collection
     const courses = await Course
-        .find(findCond)         //? All documents satisfying findCond Property
-        .sort(sortCond)         //? Sorted in sortCond manner
-        .count()                //? counts the documents satisfying findCond Property
+        .find(findCond)                     //? All documents satisfying findCond Property
+        .skip((pageNumber -1) * pageSize)   //? skips the document from previous pages
+        .limit(pageSize)                    //? limits the output documents
+        .sort(sortCond)                     //? sorted in sortCond manner
+        .select(viewCond)                   //? counts the documents satisfying findCond Property
     console.log(courses)
 }
 
