@@ -57,10 +57,10 @@ const updateCourse = async (id, newData) => {
     console.log(course)   
 }
 const removeCourse = async id => {
-    //* deleteOne() will delete one document satisfying the provided condition
-    //* And it returns the number of deleted documents and ok message.
-    const result = await Course.deleteOne({ _id : id })
-    console.log(result)
+    //* findByIdAndRemove() will delete one document satisfying the provided condition
+    //* And it returns the deleted document.
+    const course = await Course.findByIdAndRemove(id)
+    console.log(course)
 }
 
 //?createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
