@@ -34,6 +34,15 @@ const getAllCourses = async () => {
     const courses = await Course.find()
     console.log(courses)
 }
+const findCourses = async (findCond, sortCond={}, viewCond={}) => {
+    //* To Retrieve certain documents of a collection
+    const courses = await Course
+        .find(findCond)         //? All documents satisfying findCond Property
+        .sort(sortCond)         //? Sorted in sortCond manner
+        .select(viewCond)       //? only columns mentioned in viewCond
+    console.log(courses)
+}
 
 //?createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
-getAllCourses()
+//?getAllCourses()
+findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
