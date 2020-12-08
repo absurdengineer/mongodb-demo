@@ -1,0 +1,15 @@
+pattern for some string which starts with `Mosh`
+/^Mosh/
+
+pattern for some string which ends with `Hamedani`
+/Hamedani$/
+
+pattern that contains `Mosh`
+/.*Mosh.*/
+
+pattern for a case insenstive string just add i after end /
+like
+
+/^Mosh/i
+/Hamedani$/i
+/.*Mosh.*/i
