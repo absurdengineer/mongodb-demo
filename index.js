@@ -46,8 +46,18 @@ const findCourses = async (findCond, sortCond={}, viewCond={}) => {
         .select(viewCond)                   //? counts the documents satisfying findCond Property
     console.log(courses)
 }
+const updateCourse = async (id, newData) => {
+    //* Query First Approach
+    const course = await Course.findById(id)
+    if(!course) return console.log('Invalid Id')
+    console.log(course)
+    course.set(newData)
+    const result = await course.save()
+    console.log(result)     
+}
 
 //?createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
-findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
+//?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
+updateCourse('5fcf409454ec9a20a7c4a236',{ name : "Node.JS", author : "Mosh Hanedani" })
