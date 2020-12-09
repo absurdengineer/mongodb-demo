@@ -11,7 +11,15 @@ const courseSchema = new mongoose.Schema({
     tags : {
         type : Array,
         validate : {
-            validator : value => value && value.length > 0,
+            //* Sometimes we validate the data after fetching some info from db which takes some time 
+            //* so we use async validator there in following manner.
+            isAsync : true,
+            validator : (value,callback) => {
+                setTimeout(() => {
+                    result = value && value.length > 0
+                    callback(result)
+                },4000)
+            },
             message : 'A Course Should have at least one tag.'
         }
     },
