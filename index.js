@@ -48,8 +48,9 @@ const createCourse = async (name, author, tags, isPublished, price, category) =>
         const result = await course.save()
         console.log('Course Created')
         console.log(result)
-    } catch({message}) {
-        console.error(`Error : ${message}`)
+    } catch(error) {
+        for (field in error.errors)
+            console.log(error.errors[field].name, " : " , error.errors[field].message)
     }
 }
 const getAllCourses = async () => {
@@ -102,7 +103,7 @@ const removeCourse = async id => {
     }
 }
 
-createCourse('React.JS', 'Mosh Hamedani', [], true, 50, 'web')
+createCourse('React.JS', 'Mosh Hamedani', [], true, 50, '-')
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
 //?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
