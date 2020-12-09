@@ -6,24 +6,29 @@ mongoose.connect('mongodb://localhost/playground')
 
 //* Model Schema
 const courseSchema = new mongoose.Schema({
-    name : {type : String, required : true},
+    name : {type : String, minlength : 3, maxlength : 255, required : true},
     author : {type : String, required : true},
     tags : [ {type : String, required : true} ],
     date : { type : Date, default : Date.now },
     isPublished : {type : Boolean, required : true, default : false},
+    category : {type : String, required : true, enum : ['web', 'mobile', 'network']},
+    price : {type : Number, min :10, max : 200, required : function() { return this.isPublished }}
+    //! Here we can't change function to arrow function because they don't have their this object.
 })
 
 //* Model
 const Course = mongoose.model('Course',courseSchema);
 
 //* CRUD Methods
-const createCourse = async (name, author, tags, isPublished) => {
+const createCourse = async (name, author, tags, isPublished, price, category) => {
     try{
         const course = new Course({
             name : name,
             author : author,
             tags : tags,
-            isPublished : isPublished
+            isPublished : isPublished,
+            price : price,
+            category : category
         })
         //* To create a document in a collection
         const result = await course.save()
@@ -83,7 +88,7 @@ const removeCourse = async id => {
     }
 }
 
-createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
+createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true, 50, '-')
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
 //?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
