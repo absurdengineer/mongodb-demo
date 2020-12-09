@@ -25,8 +25,18 @@ const courseSchema = new mongoose.Schema({
     },
     date : { type : Date, default : Date.now },
     isPublished : {type : Boolean, required : true, default : false},
-    category : {type : String, required : true, enum : ['web', 'mobile', 'network']},
-    price : {type : Number, min :10, max : 200, required : function() { return this.isPublished }}
+    category : {
+        type : String, 
+        required : true, 
+        enum : ['web', 'mobile', 'network'], 
+        lowercase :true,
+        //* uppercase : true,
+        trim : true
+    },
+    price : {type : Number,
+        get : value => Math.round(value),
+        set : value => Math.round(value),
+        min :10, max : 200, required : function() { return this.isPublished }}
     //! Here we can't change function to arrow function because they don't have their this object.
 })
 
@@ -103,7 +113,7 @@ const removeCourse = async id => {
     }
 }
 
-createCourse('React.JS', 'Mosh Hamedani', [], true, 50, '-')
+createCourse('React.JS', 'Mosh Hamedani', ['frontend'], true, 50.8, ' web')
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
 //?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
