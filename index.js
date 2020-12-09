@@ -8,7 +8,13 @@ mongoose.connect('mongodb://localhost/playground')
 const courseSchema = new mongoose.Schema({
     name : {type : String, minlength : 3, maxlength : 255, required : true},
     author : {type : String, required : true},
-    tags : [ {type : String, required : true} ],
+    tags : {
+        type : Array,
+        validate : {
+            validator : value => value && value.length > 0,
+            message : 'A Course Should have at least one tag.'
+        }
+    },
     date : { type : Date, default : Date.now },
     isPublished : {type : Boolean, required : true, default : false},
     category : {type : String, required : true, enum : ['web', 'mobile', 'network']},
@@ -88,7 +94,7 @@ const removeCourse = async id => {
     }
 }
 
-createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true, 50, '-')
+createCourse('React.JS', 'Mosh Hamedani', [], true, 50, 'web')
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
 //?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
