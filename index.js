@@ -6,11 +6,11 @@ mongoose.connect('mongodb://localhost/playground')
 
 //* Model Schema
 const courseSchema = new mongoose.Schema({
-    name : String,
-    author : String,
-    tags : [ String ],
+    name : {type : String, required : true},
+    author : {type : String, required : true},
+    tags : [ {type : String, required : true} ],
     date : { type : Date, default : Date.now },
-    isPublished : Boolean
+    isPublished : {type : Boolean, required : true, default : false},
 })
 
 //* Model
@@ -27,7 +27,7 @@ const createCourse = async (name, author, tags, isPublished) => {
         })
         //* To create a document in a collection
         const result = await course.save()
-        console.log('User Created')
+        console.log('Course Created')
         console.log(result)
     } catch({message}) {
         console.error(`Error : ${message}`)
@@ -83,7 +83,7 @@ const removeCourse = async id => {
     }
 }
 
-//?createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
+createCourse('React.JS', 'Mosh Hamedani', [ 'React', 'JS', 'Frontend' ], true)
 //?getAllCourses()
 //?findCourses({author : 'Mosh Hamedani'},{name : 1},{name:1, author :1})
 //?findCourses({author : /^mosh/i},{name : 1},{name:1, author :1})
