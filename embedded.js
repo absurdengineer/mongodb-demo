@@ -45,12 +45,18 @@ const updateAuthor = async (courseId) => {
         }
     })
 }
+const addAuthor = async (courseId, author) => {
+    course = await Course.findById(courseId)
+    course.authors.push(author)
+    course.save()
+}
 
 //* createAuthor({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'})
-createCourse({name : 'Node.JS', authors : [
-    new Author({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'}),
-    new Author({name : 'John Doe', bio : 'John\'s Bio', website : 'johndoeprogrammer.com'})
-    ]
-})
+//* createCourse({name : 'Node.JS', authors : [
+//*     new Author({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'}),
+//*     new Author({name : 'John Doe', bio : 'John\'s Bio', website : 'johndoeprogrammer.com'})
+//*     ]
+//* })
 //* listCourses()
 //* updateAuthor('5fd1dff245c4800fe9ba5521')
+addAuthor('5fd1e4925b6c95161ede4dec',new Author({name : 'Rafeh Qazi', bio : 'Qazi\'s Bio', website : 'cleverprogrammer.com'}))
