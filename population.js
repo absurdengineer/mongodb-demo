@@ -31,7 +31,9 @@ const createCourse = async (courseData) => {
 const listCourses = async () => {
     const courses = await Course
         .find()
-        .populate('author')
+        .populate('author','name -_id') 
+        //* Above method will do the referencing work and will return the refernced document.
+        //* In second argument we can specify which properties we want to include/exclude.
         .select('name author')
     console.log(courses);
 }
