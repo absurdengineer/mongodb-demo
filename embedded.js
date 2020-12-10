@@ -12,7 +12,10 @@ const authorSchema = new mongoose.Schema({
 })
 const courseSchema = new mongoose.Schema({
     name : String,
-    author : authorSchema
+    authors : {
+        type : [authorSchema],
+        required : true
+    }
 })
 
 //? Models
@@ -44,6 +47,10 @@ const updateAuthor = async (courseId) => {
 }
 
 //* createAuthor({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'})
-//*createCourse({name : 'Node.JS', author : new Author({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'})})
+createCourse({name : 'Node.JS', authors : [
+    new Author({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'}),
+    new Author({name : 'John Doe', bio : 'John\'s Bio', website : 'johndoeprogrammer.com'})
+    ]
+})
 //* listCourses()
-updateAuthor('5fd1dff245c4800fe9ba5521')
+//* updateAuthor('5fd1dff245c4800fe9ba5521')
