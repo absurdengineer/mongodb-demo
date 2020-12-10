@@ -29,11 +29,12 @@ const createCourse = async (courseData) => {
     console.log(result)
 }
 const listCourses = async () => {
-    const courses = Course
+    const courses = await Course
         .find()
-        .select('name')
+        .select('name author')
     console.log(courses);
 }
 
 //* createAuthor({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'})
-createCourse({name : 'Node.JS', author : "5fd1c6a0f5f764f4f01c7a3b"})
+//* createCourse({name : 'Node.JS', author : "5fd1c6a0f5f764f4f01c7a3b"})
+listCourses()
