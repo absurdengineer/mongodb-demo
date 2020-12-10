@@ -1,0 +1,47 @@
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://localhost/playground')
+    .then(() => console.log(`Connected to MongoDB...`))
+    .catch(({name, message}) => console.error(`${name} : ${message}`))
+
+//? Schemas
+const authorSchema = new mongoose.Schema({
+    name : String,
+    bio : String,
+    website : String
+})
+const courseSchema = new mongoose.Schema({
+    name : String,
+    author : authorSchema
+})
+
+//? Models
+const Author = mongoose.model('Author', authorSchema)
+const Course = mongoose.model('Course', courseSchema)
+
+const createAuthor = async (authorData) => {
+    const author = new Author(authorData)
+    const result = await author.save()
+    console.log(result)
+}
+const createCourse = async (courseData) => {
+    const course = new Course(courseData)
+    const result = await course.save()
+    console.log(result)
+}
+const listCourses = async () => {
+    const courses = await Course
+        .find()
+        .select('name author')
+    console.log(courses);
+}
+const updateAuthor = async (courseId) => {
+    const course = await Course.findById(courseId)
+    course.author.name = 'Mosh Hamedani'
+    course.save()
+}
+
+//* createAuthor({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'})
+//*createCourse({name : 'Node.JS', author : new Author({name : 'Mosh Hamedani', bio : 'Mosh\'s Bio', website : 'codewithmosh.com'})})
+//* listCourses()
+updateAuthor('5fd1dff245c4800fe9ba5521')
