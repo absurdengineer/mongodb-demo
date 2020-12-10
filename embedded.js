@@ -46,8 +46,14 @@ const updateAuthor = async (courseId) => {
     })
 }
 const addAuthor = async (courseId, author) => {
-    course = await Course.findById(courseId)
+   const course = await Course.findById(courseId)
     course.authors.push(author)
+    course.save()
+}
+const removeAuthor = async (courseId, authorId) => {
+    const course = await Course.findById(courseId)
+    const author = course.authors.id(authorId)
+    author.remove()
     course.save()
 }
 
@@ -59,4 +65,5 @@ const addAuthor = async (courseId, author) => {
 //* })
 //* listCourses()
 //* updateAuthor('5fd1dff245c4800fe9ba5521')
-addAuthor('5fd1e4925b6c95161ede4dec',new Author({name : 'Rafeh Qazi', bio : 'Qazi\'s Bio', website : 'cleverprogrammer.com'}))
+//* addAuthor('5fd1e4925b6c95161ede4dec',new Author({name : 'Rafeh Qazi', bio : 'Qazi\'s Bio', website : 'cleverprogrammer.com'}))
+removeAuthor('5fd1e4925b6c95161ede4dec','5fd1e4925b6c95161ede4deb')
